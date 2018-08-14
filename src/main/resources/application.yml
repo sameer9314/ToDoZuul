@@ -1,0 +1,38 @@
+#zuul yml
+
+spring:
+  application:
+    name: ToDo-Zuul
+server:
+  port: 8762
+  
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+      
+zuul:
+  routes:
+    user:
+      path: /user/**
+      service-id: ToDo-Microservice-UserService
+    note:
+      path: /note/**
+      service-id: ToDo-Microservice-NoteService 
+      
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 600000 
+
+ribbon:  
+  ReadTimeout: 600000
+  ConnectTimeout: 600000  
+
+
+  host: 
+    connect-timeout-millis: 100000
+    socket-timeout-millis: 600000
